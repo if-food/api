@@ -1,4 +1,4 @@
-package br.com.ifdelivery.util.exception;
+package br.com.ifdelivery.util.entity;
 
 
 import java.time.LocalDate;
