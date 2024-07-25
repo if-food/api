@@ -1,7 +1,7 @@
 package br.com.ifdelivery.modelo.produto;
 
 
-import br.com.ifdelivery.util.exception.EntidadeAuditavel;
+import br.com.ifdelivery.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
