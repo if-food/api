@@ -1,4 +1,4 @@
-package br.com.ifdelivery.util.exception;
+package br.com.ifdelivery.util.entity;
 
 import java.io.Serializable;
 
@@ -13,6 +13,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+@SuppressWarnings("serial")
 @Getter
 @Setter
 @EqualsAndHashCode(of = { "id" })
