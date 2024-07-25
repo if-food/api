@@ -1,5 +1,7 @@
 package br.com.ifdelivery.modelo.entrega;
 
+import br.com.ifdelivery.modelo.usuario.Usuario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -23,5 +25,9 @@ public class Entrega extends EntidadeAuditavel{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @JsonIgnore
+    @ManyToOne
+    private Usuario usuario;
     
 }
