@@ -1,9 +1,8 @@
 package br.com.ifdelivery.modelo.usuario;
 
 import br.com.ifdelivery.modelo.endereco.Endereco;
-import br.com.ifdelivery.modelo.entrega.Entrega;
-import br.com.ifdelivery.util.exception.EntidadeAuditavel;
-import br.com.ifdelivery.util.exception.Role;
+import br.com.ifdelivery.util.entity.EntidadeAuditavel;
+import br.com.ifdelivery.util.entity.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -33,10 +32,10 @@ import org.hibernate.annotations.SQLRestriction;
 public class Usuario extends EntidadeAuditavel{
 
     @OneToMany(mappedBy = "usuario", orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Entrega> entregas;
-
-    @OneToMany(mappedBy = "usuario", orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Endereco> enderecos;
+
+    @Column
+    private String nome;
     
     @Column
     private String email;

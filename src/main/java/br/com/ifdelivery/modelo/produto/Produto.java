@@ -1,12 +1,13 @@
 package br.com.ifdelivery.modelo.produto;
 
 
-import br.com.ifdelivery.util.exception.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.SQLRestriction;
+
+import br.com.ifdelivery.util.entity.EntidadeAuditavel;
 
 @Entity
 @Table(name = "Produtos")

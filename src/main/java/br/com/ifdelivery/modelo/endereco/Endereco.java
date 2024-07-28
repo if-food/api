@@ -5,7 +5,7 @@ import org.hibernate.annotations.SQLRestriction;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.ifdelivery.modelo.usuario.Usuario;
-import br.com.ifdelivery.util.exception.EntidadeAuditavel;
+import br.com.ifdelivery.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
