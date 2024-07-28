@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.ifdelivery.modelo.usuario.Usuario;
-import br.com.ifdelivery.util.exception.Role;
+import br.com.ifdelivery.util.entity.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -18,6 +18,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UsuarioRequest {
+
+    private String nome;
 
     private String email;
 
@@ -37,6 +39,7 @@ public class UsuarioRequest {
 
     public Usuario build() {
         return Usuario.builder()
+            .nome(nome)
             .email(email)
             .senha(senha)
             .desconto(desconto)
