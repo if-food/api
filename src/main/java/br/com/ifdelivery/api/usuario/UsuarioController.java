@@ -17,15 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifdelivery.modelo.usuario.Usuario;
 import br.com.ifdelivery.modelo.usuario.UsuarioService;
-
+/*
 
 @RestController
 @RequestMapping("/api/usuario")
 @CrossOrigin
 public class UsuarioController {
 
-    @Autowired
-    private UsuarioService usuarioService;
+    final UsuarioService usuarioService;
+    
+    public UsuarioController(UsuarioService usuarioSerivce) {
+    	this.usuarioService = usuarioSerivce;
+    }
 
     @PostMapping
     public ResponseEntity<Usuario> save(@RequestBody UsuarioRequest request) {
@@ -62,3 +65,4 @@ public class UsuarioController {
     }
 
 }
+*/
