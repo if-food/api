@@ -1,0 +1,12 @@
+services:
+
+  db:
+    image: postgres:9.6
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 6FuwEb23T*2q
+      POSTGRES_DB: if-food_db
+    ports:
+      - 5435:5432
+    volumes:
+      - ./postgres-data:/bitnami/postgresql/data

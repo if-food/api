@@ -30,7 +30,7 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<Usuario> save(@RequestBody UsuarioRequest request) {
 
-        Usuario usuario = usuarioService.save(request.build());
+        Usuario usuario = usuarioService.save(request.Usuariobuild());
         return new ResponseEntity<Usuario>(usuario, HttpStatus.CREATED);
     }
 
@@ -50,7 +50,7 @@ public class UsuarioController {
     public ResponseEntity<Usuario> update(@PathVariable("id") Long id,
                                           @RequestBody UsuarioRequest request) {
 
-        usuarioService.update(id, request.build());
+        usuarioService.update(id, request.Usuariobuild());
         return ResponseEntity.ok().build();
     }
 

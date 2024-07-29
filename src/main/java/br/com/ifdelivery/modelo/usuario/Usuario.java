@@ -1,29 +1,25 @@
 package br.com.ifdelivery.modelo.usuario;
 
-import br.com.ifdelivery.modelo.endereco.Endereco;
-import br.com.ifdelivery.modelo.entrega.Entrega;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import org.hibernate.annotations.SQLRestriction;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.ifdelivery.util.entity.EntidadeAuditavel;
-import br.com.ifdelivery.util.exception.Role;
+import br.com.ifdelivery.util.entity.EntidadeNegocio;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.List;
-
-import org.hibernate.annotations.SQLRestriction;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "Usuario")
@@ -34,66 +30,54 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Usuario extends EntidadeAuditavel implements UserDetails {
+	
 
-    @OneToMany(mappedBy = "usuario", orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Entrega> entregas;
+public static final String ROLE_CLIENTE = "CLIENTE";
+	
+	@JsonIgnore
+	@Column(nullable = false)
+	private String username;
 
-    @OneToMany(mappedBy = "usuario", orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Endereco> enderecos;
+	@JsonIgnore
+	@Column(nullable = false)
+	private String password;
+	
+	@JsonIgnore
+	@ElementCollection(fetch = FetchType.EAGER)
+	@Builder.Default
+	private List<String> roles = new ArrayList<>();
 
-    @Column
-    private String email;
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return List.of();
+	}
 
-    @Column
-    private String senha;
+	@Override
+	public String getUsername() {
+		return username;
+	}
 
-    @Column
-    private Integer desconto;
+	public String getPassword() {
+		return password;
+	}
 
-    @Column
-    private LocalDate dataNascimento;
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-    @Column
-    private String telefone;
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
 
-    @Column
-    private String cpf;
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-    }
-
-    @Override
-    public String getPassword() {
-        return "";
-    }
-
-    @Override
-    public String getUsername() {
-        return "";
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
-    }
+@Override
+public boolean isEnabled() {
+return true;
+}
 }

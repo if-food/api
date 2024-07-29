@@ -4,15 +4,32 @@ import java.time.LocalDate;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 
 @Service
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService{
     
     @Autowired
     private UsuarioRepository repository;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    
+    
+    public UsuarioService(UsuarioRepository userRepository, AuthenticationManager
+    authenticationManager,
+    PasswordEncoder passwordEncoder) {
+    this.authenticationManager = authenticationManager;
+    this.repository = userRepository;
+    this.passwordEncoder = passwordEncoder;
+    }
+    
 
     @Transactional
     public Usuario save(Usuario usuario) {
@@ -39,14 +56,10 @@ public class UsuarioService {
 
         @SuppressWarnings("null")
         Usuario usuario = repository.findById(id).get();
-        usuario.setEmail(usuarioAlterado.getEmail());
-        usuario.setSenha(usuarioAlterado.getSenha());
-        usuario.setDesconto(usuarioAlterado.getDesconto());
-        usuario.setDataNascimento(usuarioAlterado.getDataNascimento());
-        usuario.setTelefone(usuarioAlterado.getTelefone());
-        usuario.setCpf(usuarioAlterado.getCpf());
-        usuario.setRole(usuarioAlterado.getRole());
-        
+        usuario.setHabilitado(usuarioAlterado.getHabilitado());
+        usuario.setUsername(usuarioAlterado.getUsername());
+        usuario.setPassword(usuarioAlterado.getPassword());
+        usuario.setRoles(usuarioAlterado.getRoles());
 
         usuario.setVersao(usuario.getVersao() + 1);
         repository.save(usuario);
@@ -62,4 +75,9 @@ public class UsuarioService {
         
         repository.save(usuario);
     }
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		return repository.findByUsername(username).get();
+	}
 }
