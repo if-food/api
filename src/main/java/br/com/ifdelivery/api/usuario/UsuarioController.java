@@ -2,6 +2,7 @@ package br.com.ifdelivery.api.usuario;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<Usuario> save(@RequestBody UsuarioRequest request) {
+    public ResponseEntity<Usuario> save(@RequestBody @Valid UsuarioRequest request) {
 
         Usuario usuario = usuarioService.save(request.build());
         return new ResponseEntity<Usuario>(usuario, HttpStatus.CREATED);
@@ -48,7 +49,7 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> update(@PathVariable("id") Long id, 
-            @RequestBody UsuarioRequest request) {
+            @RequestBody @Valid UsuarioRequest request) {
 
         usuarioService.update(id, request.build());
         return ResponseEntity.ok().build();

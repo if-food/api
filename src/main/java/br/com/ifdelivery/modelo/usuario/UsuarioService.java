@@ -3,6 +3,8 @@ package br.com.ifdelivery.modelo.usuario;
 import java.time.LocalDate;
 
 import java.util.List;
+
+import br.com.ifdelivery.util.exception.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +22,11 @@ public class UsuarioService {
         usuario.setHabilitado(Boolean.TRUE);
         usuario.setVersao(1L);
         usuario.setDataCriacao(LocalDate.now());
-        return repository.save(usuario);
+        try {
+            return repository.save(usuario);
+        } catch (Exception e) {
+            throw new UserException(UserException.MSG_EMAIL_ALREADY_EXISTS);
+        }
     }
 
     public List<Usuario> listarTodos() {
@@ -49,7 +55,11 @@ public class UsuarioService {
         
 
         usuario.setVersao(usuario.getVersao() + 1);
-        repository.save(usuario);
+        try {
+            repository.save(usuario);
+        } catch (Exception e) {
+            throw new UserException(UserException.MSG_EMAIL_ALREADY_EXISTS);
+        }
     }
 
     @Transactional

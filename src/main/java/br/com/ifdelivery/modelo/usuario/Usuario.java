@@ -36,8 +36,8 @@ public class Usuario extends EntidadeAuditavel{
 
     @Column
     private String nome;
-    
-    @Column
+
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Column

@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 
 @RestController
-@RequestMapping("/produtos")
+@RequestMapping("/api/produto")
 @CrossOrigin
 public class ProdutoController {
 
