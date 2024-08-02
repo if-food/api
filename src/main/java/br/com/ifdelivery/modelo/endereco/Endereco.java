@@ -4,7 +4,7 @@ import org.hibernate.annotations.SQLRestriction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import br.com.ifdelivery.modelo.usuario.Usuario;
+import br.com.ifdelivery.modelo.cliente.Cliente;
 import br.com.ifdelivery.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,7 +28,7 @@ public class Endereco extends EntidadeAuditavel{
 
     @JsonIgnore
     @ManyToOne
-    private Usuario usuario;
+    private Cliente cliente;
 
     @Column
     private String cep;
