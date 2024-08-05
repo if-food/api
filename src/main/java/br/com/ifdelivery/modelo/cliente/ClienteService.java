@@ -24,7 +24,6 @@ public class ClienteService {
     @Transactional
     public Cliente save(Cliente cliente) {
         usuarioService.save(cliente.getUsuario());
-
         cliente.setHabilitado(Boolean.TRUE);
         cliente.setVersao(1L);
         cliente.setDataCriacao(LocalDate.now());

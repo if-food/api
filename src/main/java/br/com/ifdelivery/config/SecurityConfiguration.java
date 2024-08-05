@@ -1,5 +1,6 @@
 package br.com.ifdelivery.config;
 
+import br.com.ifdelivery.modelo.acesso.Usuario;
 import br.com.ifdelivery.modelo.seguranca.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,9 +39,16 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/cliente").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/cliente/**").hasRole(Usuario.ROLE_CLIENTE)
+                        .requestMatchers(HttpMethod.GET, "/api/cliente/**").hasRole(Usuario.ROLE_CLIENTE)
+                        .requestMatchers(HttpMethod.PUT, "/api/cliente/**").hasRole(Usuario.ROLE_CLIENTE)
+                        .requestMatchers(HttpMethod.DELETE, "/api/cliente/**").hasRole(Usuario.ROLE_CLIENTE)
+
                         .requestMatchers(HttpMethod.POST, "/api/auth").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/auth").permitAll()
+
+
+                        .anyRequest().denyAll()
                 )
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

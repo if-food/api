@@ -1,9 +1,8 @@
 package br.com.ifdelivery.modelo.restaurante;
 
+import br.com.ifdelivery.modelo.acesso.Usuario;
 import br.com.ifdelivery.util.entity.EntidadeAuditavel;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -16,6 +15,11 @@ import org.hibernate.annotations.SQLRestriction;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Restaurante extends EntidadeAuditavel {
+
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Usuario usuario;
 
     @Column
     private String razaoSocial;
