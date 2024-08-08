@@ -39,16 +39,16 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/cliente/**").hasRole(Usuario.ROLE_CLIENTE)
-                        .requestMatchers(HttpMethod.GET, "/api/cliente/**").hasRole(Usuario.ROLE_CLIENTE)
-                        .requestMatchers(HttpMethod.PUT, "/api/cliente/**").hasRole(Usuario.ROLE_CLIENTE)
-                        .requestMatchers(HttpMethod.DELETE, "/api/cliente/**").hasRole(Usuario.ROLE_CLIENTE)
+                        .requestMatchers(HttpMethod.POST, "/api/cliente/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/cliente/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/cliente/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/cliente/**").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/api/auth").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/auth").permitAll()
 
 
-                        .anyRequest().denyAll()
+                        .anyRequest().permitAll()
                 )
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
