@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping("/api/restaurante")
 @CrossOrigin
 public class RestauranteController {
-    
+
     private final RestauranteService restauranteService;
 
     public RestauranteController(RestauranteService restauranteService) {
@@ -22,10 +22,10 @@ public class RestauranteController {
 
     @Operation(summary = "Cadastrar um restaurante", description = "Endpoint responsável por cadastrar um restaurante")
     @PostMapping
-    public ResponseEntity<Restaurante> save (@RequestBody RestauranteRequest request) {
+    public ResponseEntity<Restaurante> save(@RequestBody RestauranteRequest request) {
 
         Restaurante restaurante = restauranteService.save(request.build());
-
+        System.out.println(restaurante.getCategoriasEnum());
         return new ResponseEntity<Restaurante>(restaurante, HttpStatus.CREATED);
     }
 

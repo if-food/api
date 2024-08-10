@@ -1,6 +1,9 @@
 package br.com.ifdelivery.api.restaurante;
 
+import br.com.ifdelivery.modelo.restaurante.CategoriasEnum;
 import br.com.ifdelivery.modelo.restaurante.Restaurante;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,8 +24,10 @@ public class RestauranteRequest {
     private String rua;
     private String numero;
     private String complemento;
+    @Enumerated(EnumType.STRING)
+    private CategoriasEnum categoria;
 
-    public Restaurante build(){
+    public Restaurante build() {
         return Restaurante.builder()
                 .razaoSocial(razaoSocial)
                 .nomeFantasia(nomeFantasia)
@@ -34,6 +39,7 @@ public class RestauranteRequest {
                 .rua(rua)
                 .numero(numero)
                 .complemento(complemento)
+                .categoriasEnum(categoria)
                 .build();
     }
 
