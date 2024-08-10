@@ -55,6 +55,24 @@ public class Restaurante extends EntidadeAuditavel {
     @Column
     private boolean isOpen;
 
+    @Column
+    private boolean aceitaPix;
+
+    @Column
+    private boolean aceitaCartaoCredito;
+
+    @Column
+    private boolean aceitaCartaoDebito;
+
+    @Column
+    private boolean aceitaDinheiro;
+
+    @Column
+    private boolean aceitaValeRefeicao;
+
+    @Column
+    private boolean aceitaValeAlimentacao;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "categoria")
     private CategoriasEnum categoriasEnum;

@@ -2,6 +2,7 @@ package br.com.ifdelivery.api.restaurante;
 
 import br.com.ifdelivery.modelo.restaurante.CategoriasEnum;
 import br.com.ifdelivery.modelo.restaurante.Restaurante;
+import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,14 @@ public class RestauranteRequest {
     private String rua;
     private String numero;
     private String complemento;
+    private boolean isActive;
+    private boolean isOpen;
+    private boolean aceitaPix;
+    private boolean aceitaCartaoCredito;
+    private boolean aceitaCartaoDebito;
+    private boolean aceitaDinheiro;
+    private boolean aceitaValeRefeicao;
+    private boolean aceitaValeAlimentacao;
     @Enumerated(EnumType.STRING)
     private CategoriasEnum categoria;
 
@@ -39,6 +48,14 @@ public class RestauranteRequest {
                 .rua(rua)
                 .numero(numero)
                 .complemento(complemento)
+                .isActive(isActive)
+                .isOpen(isOpen)
+                .aceitaPix(aceitaPix)
+                .aceitaCartaoCredito(aceitaCartaoCredito)
+                .aceitaCartaoDebito(aceitaCartaoDebito)
+                .aceitaDinheiro(aceitaDinheiro)
+                .aceitaValeRefeicao(aceitaValeRefeicao)
+                .aceitaValeAlimentacao(aceitaValeAlimentacao)
                 .categoriasEnum(categoria)
                 .build();
     }
