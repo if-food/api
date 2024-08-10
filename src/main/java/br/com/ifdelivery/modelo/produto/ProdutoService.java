@@ -15,6 +15,7 @@ public class ProdutoService {
 
     public Produto save(Produto produto) {
 
+        produto.setCodigo(String.format("%010d", produtoRepository.findTopByOrderByIdDesc().getId() + 1));
         produto.setHabilitado(Boolean.TRUE);
         produto.setVersao(1L);
         produto.setDataCriacao(LocalDate.now());
@@ -52,5 +53,9 @@ public class ProdutoService {
         produto.setVersao(produto.getVersao() + 1);
 
         produtoRepository.save(produto);
+    }
+
+    public List<Produto> listarCardapioRestaurante(Long restauranteId) {
+        return produtoRepository.findByRestauranteId(restauranteId);
     }
 }
