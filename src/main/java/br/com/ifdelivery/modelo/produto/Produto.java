@@ -1,9 +1,9 @@
 package br.com.ifdelivery.modelo.produto;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import br.com.ifdelivery.modelo.restaurante.Restaurante;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -34,7 +34,8 @@ public class Produto extends EntidadeAuditavel {
 
     //TO DO
     // IMPLEMENTAR RELACIONAMENTO COM RESTAURANTE
-    // @ManyToOne
-    // @JoinColumn(name = "restaurante_id")
-    // private Restaurante restaurante;
+    @JsonIgnore
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "restaurante_id")
+    private Restaurante restaurante;
 }

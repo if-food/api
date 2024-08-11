@@ -1,7 +1,8 @@
-package br.com.ifdelivery.api.usuario;
+package br.com.ifdelivery.api.cliente;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,49 +16,48 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ifdelivery.modelo.usuario.Usuario;
-import br.com.ifdelivery.modelo.usuario.UsuarioService;
+import br.com.ifdelivery.modelo.cliente.Cliente;
+import br.com.ifdelivery.modelo.cliente.ClienteService;
 
 
 @RestController
-@RequestMapping("/api/usuario")
+@RequestMapping("/api/cliente")
 @CrossOrigin
-public class UsuarioController {
+public class ClienteController {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private ClienteService clienteService;
 
     @PostMapping
-    public ResponseEntity<Usuario> save(@RequestBody UsuarioRequest request) {
-
-        Usuario usuario = usuarioService.save(request.build());
-        return new ResponseEntity<Usuario>(usuario, HttpStatus.CREATED);
+    public ResponseEntity<Cliente> save(@RequestBody @Valid ClienteRequest request) {
+        Cliente cliente = clienteService.save(request.build());
+        return new ResponseEntity<Cliente>(cliente, HttpStatus.CREATED);
     }
 
 
     @GetMapping
-    public List<Usuario> listarTodos() {
-        return usuarioService.listarTodos();
+    public List<Cliente> listarTodos() {
+        return clienteService.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public Usuario obterPorID(@PathVariable Long id) {
-        return usuarioService.obterPorID(id);
+    public Cliente obterPorID(@PathVariable Long id) {
+        return clienteService.obterPorID(id);
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> update(@PathVariable("id") Long id, 
-            @RequestBody UsuarioRequest request) {
+    public ResponseEntity<Cliente> update(@PathVariable("id") Long id,
+                                          @RequestBody @Valid ClienteRequest request) {
 
-        usuarioService.update(id, request.build());
+        clienteService.update(id, request.build());
         return ResponseEntity.ok().build();
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        usuarioService.delete(id);
+        clienteService.delete(id);
         return ResponseEntity.ok().build();
     }
 

@@ -1,15 +1,10 @@
-package br.com.ifdelivery.modelo.usuario;
+package br.com.ifdelivery.modelo.cliente;
 
+import br.com.ifdelivery.modelo.acesso.Usuario;
 import br.com.ifdelivery.modelo.endereco.Endereco;
 import br.com.ifdelivery.util.entity.EntidadeAuditavel;
 import br.com.ifdelivery.util.entity.Role;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,29 +14,30 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.SQLRestriction;
 
 @Entity
-@Table(name = "Usuario")
+@Table(name = "Cliente")
 @SQLRestriction("habilitado = true")
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Usuario extends EntidadeAuditavel{
+public class Cliente extends EntidadeAuditavel{
 
-    @OneToMany(mappedBy = "usuario", orphanRemoval = true, fetch = FetchType.EAGER)
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Usuario usuario;
+
+    @OneToMany(mappedBy = "cliente", orphanRemoval = true, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private List<Endereco> enderecos;
 
     @Column
     private String nome;
-    
-    @Column
-    private String email;
-
-    @Column
-    private String senha;
 
     @Column
     private Integer desconto;

@@ -3,6 +3,8 @@ package br.com.ifdelivery.modelo.restaurante;
 import br.com.ifdelivery.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.SQLRestriction;
@@ -47,4 +49,31 @@ public class Restaurante extends EntidadeAuditavel {
     @Column
     private String complemento;
 
+    @Column
+    private boolean isActive;
+
+    @Column
+    private boolean isOpen;
+
+    @Column
+    private boolean aceitaPix;
+
+    @Column
+    private boolean aceitaCartaoCredito;
+
+    @Column
+    private boolean aceitaCartaoDebito;
+
+    @Column
+    private boolean aceitaDinheiro;
+
+    @Column
+    private boolean aceitaValeRefeicao;
+
+    @Column
+    private boolean aceitaValeAlimentacao;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "categoria")
+    private CategoriasEnum categoriasEnum;
 }
