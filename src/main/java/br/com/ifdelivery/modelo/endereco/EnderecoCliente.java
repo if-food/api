@@ -17,14 +17,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Endereco")
+@Table(name = "EnderecoCliente")
 @SQLRestriction("habilitado = true")
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Endereco extends EntidadeAuditavel{
+public class EnderecoCliente extends EntidadeAuditavel{
 
     @JsonIgnore
     @ManyToOne
@@ -41,6 +41,9 @@ public class Endereco extends EntidadeAuditavel{
 
     @Column
     private String bairro;
+
+    @Column
+    private String rua;
 
     @Column
     private String numero;

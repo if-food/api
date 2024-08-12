@@ -40,7 +40,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/api/cliente").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/restaurante").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth").permitAll()
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

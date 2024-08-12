@@ -1,12 +1,15 @@
 package br.com.ifdelivery.api.cliente;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import br.com.ifdelivery.modelo.acesso.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.ifdelivery.modelo.cliente.Cliente;
+import br.com.ifdelivery.modelo.endereco.EnderecoCliente;
 import br.com.ifdelivery.util.entity.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -41,6 +44,25 @@ public class ClienteRequest {
 
     private String cpf;
 
+    private String cep;
+
+    private String estado;
+
+    private String cidade;
+
+    private String bairro;
+
+    private String rua;
+
+    private String numero;
+   
+    private String complemento;
+
+    private String tipo;
+
+    /*private List<EnderecoCliente> enderecos;*/
+
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -51,6 +73,19 @@ public class ClienteRequest {
                 .roles(Arrays.asList(Usuario.ROLE_CLIENTE))
                 .build();
     }
+
+    /*public EnderecoCliente buildEnderecoCliente(){
+        return EnderecoCliente.builder()
+                .cep(cep)
+                .estado(estado)
+                .cidade(cidade)
+                .bairro(bairro)
+                .rua(rua)
+                .numero(numero)
+                .complemento(complemento)
+                .tipo(tipo)
+                .build();
+    }*/
 
     public Cliente build() {
         return Cliente.builder()
