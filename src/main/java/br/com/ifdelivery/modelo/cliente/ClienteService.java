@@ -1,10 +1,12 @@
 package br.com.ifdelivery.modelo.cliente;
 
 import java.time.LocalDate;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.ifdelivery.modelo.acesso.UsuarioService;
+import br.com.ifdelivery.modelo.endereco.EnderecoCliente;
+import br.com.ifdelivery.modelo.endereco.EnderecoClienteRepository;
 import br.com.ifdelivery.util.exception.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ public class ClienteService {
     
     @Autowired
     private ClienteRepository repository;
+
+    @Autowired
+    private EnderecoClienteRepository enderecoClienteRepository;
 
     @Autowired
     private UsuarioService usuarioService;
@@ -41,16 +46,16 @@ public class ClienteService {
     }
 
     @SuppressWarnings("null")
-    public Cliente obterPorID(Long id) {
+    public Cliente obterPorID(Long clienteId) {
 
-        return repository.findById(id).get();
+        return repository.findById(clienteId).get();
     }
 
     @Transactional
-    public void update(Long id, Cliente clienteAlterado) {
+    public void update(Long clienteId, Cliente clienteAlterado) {
 
         @SuppressWarnings("null")
-        Cliente cliente = repository.findById(id).get();
+        Cliente cliente = repository.findById(clienteId).get();
 //        cliente.setEmail(clienteAlterado.getEmail());
 //        cliente.setPassword(clienteAlterado.getPassword());
         cliente.setDesconto(clienteAlterado.getDesconto());
@@ -69,13 +74,71 @@ public class ClienteService {
     }
 
     @Transactional
-    public void delete(Long id) {
+    public void delete(Long clienteId) {
 
         @SuppressWarnings("null")
-        Cliente cliente = repository.findById(id).get();
+        Cliente cliente = repository.findById(clienteId).get();
         cliente.setHabilitado(Boolean.FALSE);
         cliente.setVersao(cliente.getVersao() + 1);
         
         repository.save(cliente);
     }
+
+    @Transactional
+    public EnderecoCliente adicionarEnderecoCliente(Long clienteId, EnderecoCliente endereco) {
+ 
+        Cliente cliente = repository.findById(clienteId).get();
+       
+        //Primeiro salva o EnderecoCliente:
+ 
+        endereco.setCliente(cliente);
+        endereco.setHabilitado(Boolean.TRUE);
+        enderecoClienteRepository.save(endereco);
+       
+        //Depois acrescenta o endereço criado ao cliente e atualiza o cliente:
+ 
+        List<EnderecoCliente> listaEnderecoCliente = cliente.getEnderecos();
+       
+        if (listaEnderecoCliente == null) {
+            listaEnderecoCliente = new ArrayList<EnderecoCliente>();
+        }
+       
+        listaEnderecoCliente.add(endereco);
+        cliente.setEnderecos(listaEnderecoCliente);
+        cliente.setVersao(cliente.getVersao() + 1);
+        repository.save(cliente);
+       
+        return endereco;
+    }
+
+    @Transactional
+   public EnderecoCliente atualizarEnderecoCliente(Long clienteId, EnderecoCliente enderecoAlterado) {
+
+       EnderecoCliente endereco = enderecoClienteRepository.findById(clienteId).get();
+       endereco.setCep(enderecoAlterado.getCep());
+       endereco.setEstado(enderecoAlterado.getEstado());
+       endereco.setCidade(enderecoAlterado.getCidade());
+       endereco.setBairro(enderecoAlterado.getBairro());
+       endereco.setRua(enderecoAlterado.getRua());
+       endereco.setNumero(enderecoAlterado.getNumero());
+       endereco.setComplemento(enderecoAlterado.getComplemento());
+       endereco.setTipo(enderecoAlterado.getTipo());
+
+       return enderecoClienteRepository.save(endereco);
+   }
+
+   @Transactional
+    public void removerEnderecoCliente(Long clienteId) {
+
+    EnderecoCliente endereco = enderecoClienteRepository.findById(clienteId).get();
+    endereco.setHabilitado(Boolean.FALSE);
+    enderecoClienteRepository.save(endereco);
+
+    Cliente cliente = this.obterPorID(endereco.getCliente().getId());
+    cliente.getEnderecos().remove(endereco);
+           cliente.setVersao(cliente.getVersao() + 1);
+    repository.save(cliente);
+}
+
+ 
 }
