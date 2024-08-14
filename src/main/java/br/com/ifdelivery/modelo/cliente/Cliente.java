@@ -1,7 +1,7 @@
 package br.com.ifdelivery.modelo.cliente;
 
 import br.com.ifdelivery.modelo.acesso.Usuario;
-import br.com.ifdelivery.modelo.endereco.Endereco;
+import br.com.ifdelivery.modelo.endereco.EnderecoCliente;
 import br.com.ifdelivery.util.entity.EntidadeAuditavel;
 import br.com.ifdelivery.util.entity.Role;
 import jakarta.persistence.*;
@@ -34,7 +34,7 @@ public class Cliente extends EntidadeAuditavel{
 
     @OneToMany(mappedBy = "cliente", orphanRemoval = true, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    private List<Endereco> enderecos;
+    private List<EnderecoCliente> enderecos;
 
     @Column
     private String nome;
