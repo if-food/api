@@ -26,7 +26,6 @@ public class ProdutoController {
     @Operation(summary = "Cadastrar um novo produto", description = "Endpoint responsavel por cadastrar um novo produto")
     @PostMapping
     public ResponseEntity<Produto> save (@RequestBody ProdutoRequest request) {
-        System.out.println("entrou no post/controller");
         try {
             Restaurante restaurante = restauranteService.obterPorID(request.getRestauranteId());
             if (restaurante == null) {
