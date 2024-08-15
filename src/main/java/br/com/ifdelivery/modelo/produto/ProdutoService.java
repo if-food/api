@@ -13,9 +13,15 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    @Transactional
     public Produto save(Produto produto) {
-
-        produto.setCodigo(String.format("%010d", produtoRepository.findTopByOrderByIdDesc().getId() + 1));
+        System.out.println("entrou no serivce");
+        Long ultimoProduto  = produtoRepository.findTopByOrderByIdDesc().getId();
+        if (ultimoProduto == null) {
+            produto.setCodigo(String.format("%010d", 1));
+        } else {
+            produto.setCodigo(String.format("%010d", ultimoProduto + 1));
+        }
         produto.setHabilitado(Boolean.TRUE);
         produto.setVersao(1L);
         produto.setDataCriacao(LocalDate.now());
