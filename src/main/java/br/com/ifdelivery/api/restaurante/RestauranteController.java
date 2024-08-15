@@ -25,7 +25,7 @@ public class RestauranteController {
     public ResponseEntity<Restaurante> save(@RequestBody RestauranteRequest request) {
 
         Restaurante restaurante = restauranteService.save(request.build());
-        System.out.println(restaurante.getCategoriasEnum());
+
         return new ResponseEntity<Restaurante>(restaurante, HttpStatus.CREATED);
     }
 

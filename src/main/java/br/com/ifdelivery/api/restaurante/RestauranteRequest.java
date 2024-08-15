@@ -2,7 +2,6 @@ package br.com.ifdelivery.api.restaurante;
 
 import br.com.ifdelivery.modelo.restaurante.CategoriasEnum;
 import br.com.ifdelivery.modelo.restaurante.Restaurante;
-import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
