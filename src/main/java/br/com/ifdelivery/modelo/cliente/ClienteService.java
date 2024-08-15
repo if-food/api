@@ -7,6 +7,7 @@ import java.util.List;
 import br.com.ifdelivery.modelo.acesso.UsuarioService;
 import br.com.ifdelivery.modelo.endereco.EnderecoCliente;
 import br.com.ifdelivery.modelo.endereco.EnderecoClienteRepository;
+import br.com.ifdelivery.modelo.mensagens.EmailService;
 import br.com.ifdelivery.util.exception.UserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class ClienteService {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private EmailService emailService;
+
 
     @Transactional
     public Cliente save(Cliente cliente) {
@@ -34,6 +38,7 @@ public class ClienteService {
         cliente.setVersao(1L);
         cliente.setDataCriacao(LocalDate.now());
         try {
+            emailService.enviarEmailConfirmacaoCadastroCliente(cliente);
             return repository.save(cliente);
         } catch (Exception e) {
             throw new UserException(UserException.MSG_EMAIL_ALREADY_EXISTS);

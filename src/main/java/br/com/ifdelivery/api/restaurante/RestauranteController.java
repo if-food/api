@@ -3,6 +3,7 @@ package br.com.ifdelivery.api.restaurante;
 import br.com.ifdelivery.modelo.restaurante.Restaurante;
 import br.com.ifdelivery.modelo.restaurante.RestauranteService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class RestauranteController {
 
     @Operation(summary = "Cadastrar um restaurante", description = "Endpoint responsável por cadastrar um restaurante")
     @PostMapping
-    public ResponseEntity<Restaurante> save(@RequestBody RestauranteRequest request) {
+    public ResponseEntity<Restaurante> save(@RequestBody @Valid RestauranteRequest request) {
 
         Restaurante restaurante = restauranteService.save(request.build());
 

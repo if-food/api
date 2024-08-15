@@ -35,6 +35,8 @@ import lombok.Setter;
 public class Usuario extends EntidadeNegocio implements UserDetails {
 
     public static final String ROLE_CLIENTE = "CLIENTE";
+    public static final String ROLE_RESTAURANTE = "RESTAURANTE";
+    public static final String ROLE_ADMIN = "ADMIN";
 
     @JsonIgnore
     @Column(nullable = false)
