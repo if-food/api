@@ -1,5 +1,7 @@
 package br.com.ifdelivery.modelo.restaurante;
 
+import br.com.ifdelivery.modelo.acesso.UsuarioRepository;
+import br.com.ifdelivery.modelo.acesso.UsuarioService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +12,16 @@ import java.util.List;
 public class RestauranteService {
 
     private final RestauranteRepository restauranteRepository;
+    private final UsuarioService usuarioService;
 
-    public RestauranteService(RestauranteRepository restauranteRepository) {
+    public RestauranteService(RestauranteRepository restauranteRepository, UsuarioService usuarioService) {
         this.restauranteRepository = restauranteRepository;
+        this.usuarioService = usuarioService;
     }
 
+    @Transactional
     public Restaurante save(Restaurante restaurante) {
-
+        usuarioService.save(restaurante.getUsuario());
         restaurante.setHabilitado(Boolean.TRUE);
         restaurante.setVersao(1L);
         restaurante.setDataCriacao(LocalDate.now());

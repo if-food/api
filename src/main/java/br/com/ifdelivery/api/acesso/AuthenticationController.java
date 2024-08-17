@@ -39,6 +39,8 @@ public class AuthenticationController {
         Map<Object, Object> loginResponse = new HashMap<>();
         loginResponse.put("username", authenticatedUser.getUsername());
         loginResponse.put("token", jwtToken);
+        loginResponse.put("role", authenticatedUser.getRoles().get(0));
+        loginResponse.put("id", authenticatedUser.getId());
         loginResponse.put("tokenExpiresIn", jwtService.getExpirationTime());
 
         return loginResponse;
