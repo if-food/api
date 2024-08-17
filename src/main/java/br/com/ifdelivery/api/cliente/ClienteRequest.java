@@ -92,12 +92,10 @@ public class ClienteRequest {
 
             .usuario(buildUsuario())
             .nome(nome)
-//            .email(email)
             .desconto(desconto)
             .dataNascimento(dataNascimento)
             .telefone(telefone)
             .cpf(cpf)
-            .role(role)
             .build();
     }
 }

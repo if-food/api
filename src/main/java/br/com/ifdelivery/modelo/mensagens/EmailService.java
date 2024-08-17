@@ -44,6 +44,7 @@ public class EmailService {
 
     private JavaMailSender emailSender;
 
+    @Async
     public void enviarEmailConfirmacaoCadastroCliente(Cliente cliente) {
 
         String assuntoEmail = "Bem vindo ao nosso aplicativo";
@@ -51,11 +52,11 @@ public class EmailService {
         Context params = new Context();
         params.setVariable("cliente", cliente);
 
-        this.sendMailTemplate("bem_vindo_cliente", cliente.getUsuario().getUsername(), assuntoEmail, params);
+        this.sendMailTemplate("bem_vindo_cliente", cliente.getUsuario().getUsername(), assuntoEmail, params, cliente.getCodigoAuth());
     }
 
     @Async
-    private void sendMailTemplate(String template, String to, String subject, Context params) {
+    private void sendMailTemplate(String template, String to, String subject, Context params, String codigo) {
 
         TemplateEngine templateEngine = new TemplateEngine();
 

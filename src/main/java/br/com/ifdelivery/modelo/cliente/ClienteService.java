@@ -3,6 +3,7 @@ package br.com.ifdelivery.modelo.cliente;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import br.com.ifdelivery.modelo.acesso.UsuarioService;
 import br.com.ifdelivery.modelo.endereco.EnderecoCliente;
@@ -32,11 +33,22 @@ public class ClienteService {
 
     @Transactional
     public Cliente save(Cliente cliente) {
+
+        Random random = new Random();
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < 4; i++) {
+            int randomNumber = random.nextInt(9);
+            sb.append(randomNumber);
+        }
+
         usuarioService.save(cliente.getUsuario());
 
         cliente.setHabilitado(Boolean.TRUE);
         cliente.setVersao(1L);
         cliente.setDataCriacao(LocalDate.now());
+        cliente.setCodigoAuth(sb.toString());
         try {
             emailService.enviarEmailConfirmacaoCadastroCliente(cliente);
             return repository.save(cliente);
@@ -59,6 +71,8 @@ public class ClienteService {
     @Transactional
     public void update(Long clienteId, Cliente clienteAlterado) {
 
+
+
         @SuppressWarnings("null")
         Cliente cliente = repository.findById(clienteId).get();
 //        cliente.setEmail(clienteAlterado.getEmail());
@@ -67,8 +81,8 @@ public class ClienteService {
         cliente.setDataNascimento(clienteAlterado.getDataNascimento());
         cliente.setTelefone(clienteAlterado.getTelefone());
         cliente.setCpf(clienteAlterado.getCpf());
-        cliente.setRole(clienteAlterado.getRole());
-        
+
+
 
         cliente.setVersao(cliente.getVersao() + 1);
         try {
