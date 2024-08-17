@@ -1,5 +1,6 @@
 package br.com.ifdelivery.modelo.produto;
 
+import br.com.ifdelivery.modelo.restaurante.RestauranteService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,11 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    @Autowired
+    private RestauranteService restauranteService;
+
     @Transactional
     public Produto save(Produto produto) {
-        System.out.println("entrou no serivce");
         Long ultimoProduto  = produtoRepository.findTopByOrderByIdDesc().getId();
         if (ultimoProduto == null) {
             produto.setCodigo(String.format("%010d", 1));
