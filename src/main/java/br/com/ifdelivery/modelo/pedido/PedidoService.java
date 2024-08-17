@@ -1,6 +1,6 @@
 package br.com.ifdelivery.modelo.pedido;
 
-import br.com.ifdelivery.api.pedido.item_pedido.ItemPedidoRequest;
+import br.com.ifdelivery.api.pedido.ItemPedidoRequest;
 import br.com.ifdelivery.modelo.cliente.Cliente;
 import br.com.ifdelivery.modelo.cliente.ClienteRepository;
 import br.com.ifdelivery.modelo.item_pedido.ItemPedido;
@@ -16,6 +16,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,35 +37,58 @@ public class PedidoService {
     }
 
     @Transactional
-    public Pedido criarPedido(Long clienteId, Long restauranteId, List<ItemPedidoRequest> itens) {
+    public Pedido criarPedido(Long clienteId, Long restauranteId, Pedido pedido, List<ItemPedidoRequest> itens) {
 
         Cliente cliente = clienteRepository.findById(clienteId)
                 .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
         Restaurante restaurante = restauranteRepository.findById(restauranteId)
                 .orElseThrow(() -> new EntityNotFoundException("Restaurante não encontrado"));
 
-        Pedido pedido = new Pedido();
         pedido.setCliente(cliente);
         pedido.setRestaurante(restaurante);
+        pedido.setMetodoPagamento(pedido.getMetodoPagamento());
         pedido.setHabilitado(Boolean.TRUE);
         pedido.setVersao(1L);
         pedido.setDataCriacao(LocalDate.now());
+        pedido.setStatusEntrega(StatusEntregaEnum.PENDENTE);
+        pedido.setStatusPgto(StatusPgtoEnum.PENDENTE);
 
-        // Salva o pedido no banco de dados
-        pedido = pedidoRepository.save(pedido);
+        double valorTotal = 0;
 
-        for (ItemPedidoRequest itemPedidoRequest : itens){
+        // Inicialize a lista de itens antes de adicionar
+        List<ItemPedido> itensPedido = new ArrayList<>();
+
+        for (ItemPedidoRequest itemPedidoRequest : itens) {
             Produto produto = produtoRepository.findById(itemPedidoRequest.getProdutoId())
                     .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
 
-            ItemPedido itemPedido = new ItemPedido();
-            itemPedido.setPedido(pedido);
-            itemPedido.setProduto(produto);
-            itemPedido.setQuantidade(itemPedidoRequest.getQuantidade());
+            ItemPedido item = new ItemPedido();
+            item.setPedido(pedido); // Associe o pedido ao item
+            item.setProduto(produto);
+            item.setQuantidade(itemPedidoRequest.getQuantidade());
+            item.setPrecoUnitario(produto.getValorUnitario());
+            item.setHabilitado(Boolean.TRUE);
+            item.setVersao(1L);
+            item.setDataCriacao(LocalDate.now());
 
-            itemPedidoRepository.save(itemPedido);
-            }
-        return pedido;
+            itensPedido.add(item); // Adicione o item à lista
+
+            valorTotal += item.getSubtotal(); // Atualize o valor total
+        }
+
+        pedido.setItens(itensPedido); // Defina a lista de itens no pedido
+        pedido.setValorTotal(valorTotal); // Defina o valor total
+
+        // Salve o pedido primeiro para garantir que ele tenha um ID
+        Pedido pedidoSalvo = pedidoRepository.save(pedido);
+
+        // Agora que o pedido foi salvo, salve os itens associados
+        for (ItemPedido item : itensPedido) {
+            item.setPedido(pedidoSalvo); // Certifique-se de que o item está associado ao pedido salvo
+            itemPedidoRepository.save(item);
+        }
+
+        return pedidoSalvo; // Retorne o pedido salvo
     }
 
 

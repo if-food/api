@@ -1,6 +1,5 @@
 package br.com.ifdelivery.api.pedido;
 
-import br.com.ifdelivery.api.pedido.item_pedido.ItemPedidoRequest;
 import br.com.ifdelivery.api.produto.ProdutoRequest;
 import br.com.ifdelivery.modelo.pedido.Pedido;
 import br.com.ifdelivery.modelo.pedido.PedidoService;
@@ -24,12 +23,17 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<Pedido> save (@RequestParam Long clienteId,
+    public ResponseEntity<?> save (@RequestParam Long clienteId,
                                         @RequestParam Long restauranteId,
-                                        @RequestBody List<ItemPedidoRequest> request) {
+                                        @RequestBody PedidoCreateRequest request) {
 
-        Pedido pedido = pedidoService.criarPedido(clienteId,restauranteId,request);
-        return  ResponseEntity.ok(pedido);
+        try {
+            Pedido pedido = pedidoService.criarPedido(clienteId,restauranteId,request.build(),request.getItens());
+            return  ResponseEntity.ok(pedido);
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(400).body(e.getMessage());
+        }
     }
 
 }
