@@ -36,4 +36,15 @@ public class PedidoController {
         }
     }
 
+    @GetMapping("/")
+    public List<Pedido> obterPedidos(@RequestParam(required = false) Long clienteId, @RequestParam(required = false) Long restauranteId) {
+        if (clienteId != null) {
+            return pedidoService.listarPorCliente(clienteId);
+        } else if (restauranteId != null) {
+            return pedidoService.listarPorRestaurante(restauranteId);
+        } else {
+            throw new IllegalArgumentException("clienteId or restauranteId devem ser fornecidos");
+        }
+    }
+
 }

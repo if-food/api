@@ -59,20 +59,8 @@ public class PedidoService {
         List<ItemPedido> itensPedido = new ArrayList<>();
 
         for (ItemPedidoRequest itemPedidoRequest : itens) {
-            Produto produto = produtoRepository.findById(itemPedidoRequest.getProdutoId())
-                    .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
-
-            ItemPedido item = new ItemPedido();
-            item.setPedido(pedido); // Associe o pedido ao item
-            item.setProduto(produto);
-            item.setQuantidade(itemPedidoRequest.getQuantidade());
-            item.setPrecoUnitario(produto.getValorUnitario());
-            item.setHabilitado(Boolean.TRUE);
-            item.setVersao(1L);
-            item.setDataCriacao(LocalDate.now());
-
-            itensPedido.add(item); // Adicione o item à lista
-
+            ItemPedido item = salvarItemPedido(pedido, itemPedidoRequest);
+            itensPedido.add(item);
             valorTotal += item.getSubtotal(); // Atualize o valor total
         }
 
@@ -91,6 +79,30 @@ public class PedidoService {
         return pedidoSalvo; // Retorne o pedido salvo
     }
 
+    private ItemPedido salvarItemPedido(Pedido pedido, ItemPedidoRequest itemPedidoRequest) {
+        Produto produto = produtoRepository.findById(itemPedidoRequest.getProdutoId())
+                .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
+
+        ItemPedido item = new ItemPedido();
+        item.setPedido(pedido); // Associe o pedido ao item
+        item.setProduto(produto);
+        item.setQuantidade(itemPedidoRequest.getQuantidade());
+        item.setPrecoUnitario(produto.getValorUnitario());
+        item.setHabilitado(Boolean.TRUE);
+        item.setVersao(1L);
+        item.setDataCriacao(LocalDate.now());
+
+        return item;
+    }
+
+    //listar pedidos por cliente
+    public List<Pedido> listarPorCliente(Long clienteId) {
+        return pedidoRepository.findByClienteId(clienteId);
+    }
+    //listar pedidos por restaurante
+    public List<Pedido> listarPorRestaurante(Long restauranteId) {
+        return pedidoRepository.findByRestauranteId(restauranteId);
+    }
 
     public Pedido atualizar(long id, Pedido pedidoAlterado) {
         Pedido pedido = pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido não encontrado"));

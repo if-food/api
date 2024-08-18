@@ -19,11 +19,11 @@ public class ProdutoService {
 
     @Transactional
     public Produto save(Produto produto) {
-        Long ultimoProduto  = produtoRepository.findTopByOrderByIdDesc().getId();
+        Produto ultimoProduto  = produtoRepository.findTopByOrderByIdDesc();
         if (ultimoProduto == null) {
             produto.setCodigo(String.format("%010d", 1));
         } else {
-            produto.setCodigo(String.format("%010d", ultimoProduto + 1));
+            produto.setCodigo(String.format("%010d", ultimoProduto.getId() + 1));
         }
         produto.setHabilitado(Boolean.TRUE);
         produto.setVersao(1L);
@@ -37,9 +37,9 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
-    public Produto obterPorID(Long id) {
-
-        return produtoRepository.findById(id).get();
+    //listar pedidos por restaurante
+    public List<Produto> listarPorRestaurante(Long restauranteId) {
+        return produtoRepository.findByRestauranteId(restauranteId);
     }
 
     @Transactional

@@ -25,7 +25,7 @@ public class ProdutoController {
 
     @Operation(summary = "Cadastrar um novo produto", description = "Endpoint responsavel por cadastrar um novo produto")
     @PostMapping
-    public ResponseEntity<Produto> save (@RequestBody ProdutoRequest request) {
+    public ResponseEntity<?> save (@RequestBody ProdutoRequest request) {
         try {
             Restaurante restaurante = restauranteService.obterPorID(request.getRestauranteId());
             if (restaurante == null) {
@@ -34,7 +34,7 @@ public class ProdutoController {
             Produto produtoNovo = produtoService.save(request.build(restaurante));
             return new ResponseEntity<>(produtoNovo, HttpStatus.CREATED);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
