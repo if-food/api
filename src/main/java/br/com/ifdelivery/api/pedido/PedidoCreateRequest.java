@@ -25,7 +25,7 @@ public class PedidoCreateRequest{
     private String observacao;
     private List<ItemPedidoRequest> itens;
 
-    public Pedido build( ){
+    public Pedido build(){
         return Pedido.builder()
                 .metodoPagamento(formaPgto)
                 .build();
