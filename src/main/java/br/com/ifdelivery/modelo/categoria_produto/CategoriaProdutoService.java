@@ -2,9 +2,12 @@ package br.com.ifdelivery.modelo.categoria_produto;
 
 import br.com.ifdelivery.modelo.restaurante.Restaurante;
 import br.com.ifdelivery.modelo.restaurante.RestauranteService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoriaProdutoService {
@@ -34,6 +37,38 @@ public class CategoriaProdutoService {
             return categoriaProdutoRepository.findById(id).orElse(null);
         }
 
-        //to do - implementar listagem de categorias por restaurante e deleção de categoria
 
+        public List<CategoriaProduto> listarPorRestaurante(Long restauranteId) {
+            return categoriaProdutoRepository.findByRestauranteId(restauranteId);
+        }
+
+
+        public void delete(Long id) {
+
+            Optional<CategoriaProduto> optionalCategoriaProduto = categoriaProdutoRepository.findById(id);
+
+            if (optionalCategoriaProduto.isPresent()) {
+                CategoriaProduto categoriaProduto = optionalCategoriaProduto.get();
+                categoriaProduto.setHabilitado(Boolean.FALSE);
+                categoriaProduto.setVersao(categoriaProduto.getVersao() + 1);
+                categoriaProdutoRepository.save(categoriaProduto);
+            } else {
+                throw new EntityNotFoundException("CategoriaProduto não encontrada com  id: " + id);
+            }
+        }
+
+        public CategoriaProduto update(Long id, CategoriaProduto categoriaProdutoAlterada) {
+
+            Optional<CategoriaProduto> optionalCategoriaProduto = categoriaProdutoRepository.findById(id);
+
+            if (optionalCategoriaProduto.isPresent()) {
+                CategoriaProduto categoriaProduto = optionalCategoriaProduto.get();
+                categoriaProduto.setNome(categoriaProdutoAlterada.getNome());
+                categoriaProduto.setDescricao(categoriaProdutoAlterada.getDescricao());
+                categoriaProdutoRepository.save(categoriaProduto);
+                return categoriaProduto;
+            } else {
+                throw new EntityNotFoundException("CategoriaProduto não encontrada com  id: " + id);
+            }
+        }
 }
