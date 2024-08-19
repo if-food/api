@@ -34,21 +34,11 @@ public class ClienteService {
     @Transactional
     public Cliente save(Cliente cliente) {
 
-        Random random = new Random();
-
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < 4; i++) {
-            int randomNumber = random.nextInt(9);
-            sb.append(randomNumber);
-        }
-
         usuarioService.save(cliente.getUsuario());
 
         cliente.setHabilitado(Boolean.TRUE);
         cliente.setVersao(1L);
         cliente.setDataCriacao(LocalDate.now());
-        cliente.setCodigoAuth(sb.toString());
         try {
             emailService.enviarEmailConfirmacaoCadastroCliente(cliente);
             return repository.save(cliente);
@@ -129,6 +119,7 @@ public class ClienteService {
        
         return endereco;
     }
+
 
     @Transactional
    public EnderecoCliente atualizarEnderecoCliente(Long clienteId, EnderecoCliente enderecoAlterado) {

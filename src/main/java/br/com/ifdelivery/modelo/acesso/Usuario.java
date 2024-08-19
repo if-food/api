@@ -51,6 +51,12 @@ public class Usuario extends EntidadeNegocio implements UserDetails {
     @Builder.Default
     private List<String> roles = new ArrayList<>();
 
+    @Column
+    private String codigoAuth;
+
+    @Column
+    private boolean habilitado;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();

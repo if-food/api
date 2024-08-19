@@ -52,7 +52,7 @@ public class EmailService {
         Context params = new Context();
         params.setVariable("cliente", cliente);
 
-        this.sendMailTemplate("bem_vindo_cliente", cliente.getUsuario().getUsername(), assuntoEmail, params, cliente.getCodigoAuth());
+        this.sendMailTemplate("bem_vindo_cliente", cliente.getUsuario().getUsername(), assuntoEmail, params, "");
     }
 
     @Async

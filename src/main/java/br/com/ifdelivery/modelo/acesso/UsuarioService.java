@@ -11,6 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import org.springframework.web.bind.annotation.PutMapping;
+
+import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class UsuarioService implements UserDetailsService {
@@ -49,11 +53,39 @@ public class UsuarioService implements UserDetailsService {
         return repository.findByUsername(username).get();
     }
 
+
+    @PutMapping
+    public void habilitarPorToken(Usuario u) {
+
+        Usuario u1 = repository.findById(u.getId()).get();
+
+        repository.save(u1);
+
+    }
+
     @Transactional
     public Usuario save(Usuario user) {
+        Random random = new Random();
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < 4; i++) {
+            int randomNumber = random.nextInt(9);
+            sb.append(randomNumber);
+        }
+
+        user.setCodigoAuth(sb.toString());
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setHabilitado(Boolean.TRUE);
         return repository.save(user);
+    }
+
+
+    public Usuario retornarClientePeloAuthCode(String AuthCode) {
+
+        return repository.findByCodigoAuth(AuthCode).get();
+
     }
 }
 
