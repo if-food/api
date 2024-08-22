@@ -1,35 +1,60 @@
 package br.com.ifdelivery.modelo.restaurante;
 
 public enum CategoriasEnum {
-  VEGETARIANO,
-  VEGANO,
-  ORGÂNICO,
-  SEMGLÚTEN,
-  SEMLACTOSE,
-  COMIDAINTEGRAL,
-  ALIMENTAÇÃOCONSCIENTE,
-  COMIDALOCALESAZONAL,
-  COMIDAÉTICA,
-  RESTAURANTESDEFERMENTADOS,
-  RESTAURANTESDESUPERALIMENTOS,
-  ITALIANO,
-  CHINÊS,
-  MEXICANO,
-  JAPONÊS,
-  FRANCÊS,
-  BRASILEIRO,
-  AMERICANO,
-  INDIANO,
-  MEDITERRÂNEO,
-  TURCO,
-  GREGO,
-  SUSHI,
-  PIZZARIA,
-  HAMBURGUERIA,
-  COMIDARÁPIDA,
-  CAFETERIA,
-  BISTRÔ,
-  STEAKHOUSE,
+
+
+  ITALIANO("ITALIANO"),
+  CHINES("CHINES"),
+  MEXICANO("MEXICANO"),
+  JAPONES("JAPONES"),
+  FRANCES("FRANCES"),
+  BRASILEIRO("BRASILEIRO"),
+  AMERICANO("AMERICANO"),
+  INDIANO("INDIANO"),
+  MEDITERRANEO("MEDITERRANEO"),
+  TURCO("TURCO"),
+  GREGO("GREGO"),
+  SUSHI("SUSHI"),
+  PIZZARIA("PIZZARIA"),
+  HAMBURGUERIA("HAMBURGUERIA"),
+  COMIDA_RAPIDA("COMIDA_RAPIDA"),
+  CAFETERIA("CAFETERIA"),
+  BISTRO("BISTRO"),
+  GASTRONOMIA_REGIONAL("GASTRONOMIA_REGIONAL"),
+  RESTAURANTE_DE_FRUTOS_DO_MAR("RESTAURANTE_DE_FRUTOS_DO_MAR"),
+  STEAKHOUSE("STEAKHOUSE"),
+  VEGETARIANO("VEGETARIANO"),
+  VEGANO("VEGANO"),
+  ORGANICO("ORGANICO"),
+  RAW_FOOD("RAW_FOOD"),
+  SEM_GLUTEN("SEM_GLUTEN"),
+  SEM_LACTOSE("SEM_LACTOSE"),
+  COMIDA_INTEGRAL("COMIDA_INTEGRAL"),
+  ALIMENTACAO_CONSCIENTE("ALIMENTACAO_CONSCIENTE"),
+  COMIDA_LOCAL_E_SAZONAL("COMIDA_LOCAL_E_SAZONAL"),
+  COMIDA_ETICA("COMIDA_ETICA"),
+  RESTAURANTES_DE_FERMENTADOS("RESTAURANTES_DE_FERMENTADOS"),
+  RESTAURANTES_DE_SUPERALIMENTOS("RESTAURANTES_DE_SUPERALIMENTOS");
+
+
+  private final String descricao;
+
+  CategoriasEnum(String descricao) {
+    this.descricao = descricao;
+  }
+
+  public String getDescricao() {
+    return descricao;
+  }
+
+  public static CategoriasEnum fromDescricao(String descricao) {
+    for (CategoriasEnum categoria : values()) {
+      if (categoria.descricao.equalsIgnoreCase(descricao)) {
+        return categoria;
+      }
+    }
+    throw new IllegalArgumentException("Descrição inválida: " + descricao);
+  }
 }
 
 /*

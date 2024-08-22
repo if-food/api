@@ -25,6 +25,8 @@ public class RestauranteController {
     @PostMapping
     public ResponseEntity<Restaurante> save(@RequestBody @Valid RestauranteRequest request) {
 
+        System.out.println(request.toString());
+
         Restaurante restaurante = restauranteService.save(request.build());
 
         return new ResponseEntity<Restaurante>(restaurante, HttpStatus.CREATED);

@@ -37,8 +37,12 @@ public class RestauranteRequest {
     private boolean aceitaDinheiro;
     private boolean aceitaValeRefeicao;
     private boolean aceitaValeAlimentacao;
-    @Enumerated(EnumType.STRING)
-    private CategoriasEnum categoria;
+
+  //  @Enumerated(EnumType.STRING)
+ //   private CategoriasEnum categoria;
+
+
+    private String categoria;
 
     @NotBlank(message = "O e-mail é de preenchimento obrigatório")
     @Email
@@ -78,7 +82,7 @@ public class RestauranteRequest {
                 .aceitaDinheiro(aceitaDinheiro)
                 .aceitaValeRefeicao(aceitaValeRefeicao)
                 .aceitaValeAlimentacao(aceitaValeAlimentacao)
-                .categoriasEnum(categoria)
+                .categoriasEnum(CategoriasEnum.fromDescricao(categoria))
                 .usuario(buildUsuario())
                 .build();
     }
