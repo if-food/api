@@ -64,6 +64,7 @@ public class RestauranteRequest {
 
     public Restaurante build() {
         return Restaurante.builder()
+                .usuario(buildUsuario())
                 .razaoSocial(razaoSocial)
                 .nomeFantasia(nomeFantasia)
                 .cnpj(cnpj)
@@ -83,7 +84,6 @@ public class RestauranteRequest {
                 .aceitaValeRefeicao(aceitaValeRefeicao)
                 .aceitaValeAlimentacao(aceitaValeAlimentacao)
                 .categoriasEnum(CategoriasEnum.fromDescricao(categoria))
-                .usuario(buildUsuario())
                 .build();
     }
 
