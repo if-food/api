@@ -22,7 +22,7 @@ public class CategoriaProdutoService {
 
         public CategoriaProduto save(CategoriaProduto categoriaProduto, Long restauranteId) {
 
-            Restaurante restaurante = restauranteService.obterPorID(restauranteId);
+            Restaurante restaurante = restauranteService.obterPorRestauranteId(restauranteId);
             if (restaurante == null) {
                 throw new RuntimeException("Restaurante não encontrado");
             }

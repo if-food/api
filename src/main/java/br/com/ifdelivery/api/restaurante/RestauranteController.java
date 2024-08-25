@@ -2,6 +2,7 @@ package br.com.ifdelivery.api.restaurante;
 
 import br.com.ifdelivery.modelo.restaurante.Restaurante;
 import br.com.ifdelivery.modelo.restaurante.RestauranteService;
+import br.com.ifdelivery.util.exception.RestauranteException;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -39,9 +40,24 @@ public class RestauranteController {
     }
 
     @Operation(summary = "Obter um restaurante por ID", description = "Endpoint responsável por obter um restaurante por ID")
-    @GetMapping("/{id}")
-    public Restaurante obterPorID(@PathVariable Long id) {
-        return restauranteService.obterPorID(id);
+    @GetMapping("/")
+    public ResponseEntity<?> obterPorID(@RequestParam(required = false) Long restauranteId,
+                                                  @RequestParam(required = false) Long usuarioId) {
+        try {
+            if (restauranteId != null) {
+                Restaurante restaurante = restauranteService.obterPorRestauranteId(restauranteId);
+                return ResponseEntity.ok(restaurante);
+            } else if (usuarioId != null) {
+                Restaurante restaurante = restauranteService.obterPorUsuarioId(usuarioId);
+                return ResponseEntity.ok(restaurante);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
+        } catch (RestauranteException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     @Operation(summary = "Atualizar um restaurante", description = "Endpoint responsável por atualizar um restaurante")

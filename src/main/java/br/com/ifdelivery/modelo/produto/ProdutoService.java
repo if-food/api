@@ -28,7 +28,7 @@ public class ProdutoService {
     public Produto save(Produto produto, Long restauranteId, Long categoriaId) {
 
         try {
-            produto.setRestaurante(restauranteService.obterPorID(restauranteId));
+            produto.setRestaurante(restauranteService.obterPorRestauranteId(restauranteId));
         } catch (Exception e) {
             throw new IllegalArgumentException("Restaurante não encontrado");
         }
