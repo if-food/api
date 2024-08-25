@@ -1,6 +1,7 @@
 package br.com.ifdelivery.modelo.produto;
 
 
+import br.com.ifdelivery.modelo.categoria_produto.CategoriaProduto;
 import br.com.ifdelivery.modelo.restaurante.Restaurante;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -23,8 +24,7 @@ public class Produto extends EntidadeAuditavel {
     private String codigo;
     @Column
     private String titulo;
-    @Column
-    private String categoria;
+
     @Column
     private String descricao;
     @Column
@@ -32,10 +32,13 @@ public class Produto extends EntidadeAuditavel {
     @Column
     private Double valorUnitario;
 
-    //TO DO
-    // IMPLEMENTAR RELACIONAMENTO COM RESTAURANTE
     @JsonIgnore
     @ManyToOne(optional = false)
     @JoinColumn(name = "restaurante_id")
     private Restaurante restaurante;
+
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "categoria_produto_id")
+    private CategoriaProduto categoriaProduto;
 }

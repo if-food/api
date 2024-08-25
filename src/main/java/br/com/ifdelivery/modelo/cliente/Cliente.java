@@ -51,7 +51,8 @@ public class Cliente extends EntidadeAuditavel{
     @Column
     private String cpf;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @Column
+    private String codigoAuth;
+
 
 }
