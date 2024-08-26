@@ -3,7 +3,8 @@ package br.com.ifdelivery.modelo.cliente;
 import br.com.ifdelivery.modelo.acesso.Usuario;
 import br.com.ifdelivery.modelo.endereco.EnderecoCliente;
 import br.com.ifdelivery.util.entity.EntidadeAuditavel;
-import br.com.ifdelivery.util.entity.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Type;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,5 +55,10 @@ public class Cliente extends EntidadeAuditavel{
     @Column
     private String codigoAuth;
 
+
+
+    @Lob
+    @Column
+    byte[] photo;
 
 }

@@ -2,14 +2,18 @@ package br.com.ifdelivery.modelo.produto;
 
 import br.com.ifdelivery.api.produto.dto.ProdutoDTO;
 import br.com.ifdelivery.modelo.categoria_produto.CategoriaProdutoService;
+import br.com.ifdelivery.modelo.cliente.Cliente;
 import br.com.ifdelivery.modelo.restaurante.RestauranteService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +29,7 @@ public class ProdutoService {
     private CategoriaProdutoService categoriaProdutoService;
 
     @Transactional
-    public Produto save(Produto produto, Long restauranteId, Long categoriaId) {
+    public Produto save(Produto produto, Long restauranteId, Long categoriaId, MultipartFile imageFile) throws IOException {
 
         try {
             produto.setRestaurante(restauranteService.obterPorRestauranteId(restauranteId));
@@ -47,8 +51,13 @@ public class ProdutoService {
         produto.setHabilitado(Boolean.TRUE);
         produto.setVersao(1L);
         produto.setDataCriacao(LocalDate.now());
-        return produtoRepository.save(produto);
 
+
+        if (imageFile != null && !imageFile.isEmpty()) {
+            produto.setPhoto(imageFile.getBytes());
+        }
+
+        return produtoRepository.save(produto);
     }
 
     public List<Produto> listarTodos() {
@@ -108,6 +117,18 @@ public class ProdutoService {
                         .categoriaNome(p.getCategoriaProduto().getNome()) // Ou qualquer outro campo relevante
                         .build())
                 .collect(Collectors.groupingBy(ProdutoDTO::getCategoriaNome));
+    }
+
+    @Transactional
+    public void alterarImagem(Long produtoId, MultipartFile imageFile) throws IOException {
+        Optional<Produto> produtoOpt = produtoRepository.findById(produtoId);
+        if (produtoOpt.isPresent()) {
+            Produto produto = produtoOpt.get();
+            produto.setPhoto(imageFile.getBytes());
+            produtoRepository.save(produto);
+        } else {
+            throw new RuntimeException("Cliente not found");
+        }
     }
 
 }

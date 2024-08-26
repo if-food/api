@@ -14,9 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProdutoRequest {
     private String titulo;
-    private CategoriaProduto categoriaId    ;
+    private Long categoriaId    ;
     private String descricao;
-    private String imagem;
     private Double valorUnitario;
     private Long restauranteId;
 
@@ -24,7 +23,6 @@ public class ProdutoRequest {
         return Produto.builder()
                 .titulo(titulo)
                 .descricao(descricao)
-                .imagem(imagem)
                 .valorUnitario(valorUnitario)
                 .build();
     }
