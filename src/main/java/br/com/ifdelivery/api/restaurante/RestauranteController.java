@@ -3,12 +3,16 @@ package br.com.ifdelivery.api.restaurante;
 import br.com.ifdelivery.modelo.restaurante.Restaurante;
 import br.com.ifdelivery.modelo.restaurante.RestauranteService;
 import br.com.ifdelivery.util.exception.RestauranteException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -74,5 +78,21 @@ public class RestauranteController {
 
         restauranteService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> addPhoto(@RequestPart("data") String dataJson,
+                                      @RequestPart(value = "imageFile", required = false) MultipartFile imageFile) {
+        try {
+            ObjectMapper requestMapper = new ObjectMapper();
+            FotoRestauranteRequest request = requestMapper.readValue(dataJson, FotoRestauranteRequest.class);
+            Long restauranteId = request.getRestauranteId();
+            String tipoDeFoto = request.getTipoDeFoto();
+
+            restauranteService.adicionarFoto(restauranteId, imageFile.getBytes(), tipoDeFoto);
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }

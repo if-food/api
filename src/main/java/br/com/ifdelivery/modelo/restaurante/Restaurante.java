@@ -78,4 +78,12 @@ public class Restaurante extends EntidadeAuditavel {
     @Enumerated(EnumType.STRING)
     @Column(name = "categoria")
     private CategoriasEnum categoriasEnum;
+
+    @Lob
+    @Column(name = "photo_banner")
+    byte[] photoBanner;
+
+    @Lob
+    @Column(name = "photo_logo")
+    byte[] photoLogo;
 }
