@@ -1,5 +1,6 @@
 package br.com.ifdelivery.api.categoria_produto;
 
+import br.com.ifdelivery.api.categoria_produto.dto.CategoriaProdutoDTO;
 import br.com.ifdelivery.modelo.categoria_produto.CategoriaProduto;
 import br.com.ifdelivery.modelo.categoria_produto.CategoriaProdutoService;
 import org.springframework.http.ResponseEntity;
@@ -53,5 +54,11 @@ public class CategoriaProdutoController {
         } catch (Exception e) {
             return ResponseEntity.status(400).body(e.getMessage());
         }
+    }
+
+    @GetMapping("/cardapio/")
+    public ResponseEntity<?> listar(@RequestParam Long restauranteId) {
+        List<CategoriaProdutoDTO> categorias = categoriaProdutoService.obterCardapioGestorRestaurante(restauranteId);
+        return ResponseEntity.ok(categorias);
     }
 }

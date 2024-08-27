@@ -41,7 +41,9 @@ public class ProdutoService {
         } catch (Exception e) {
             throw new IllegalArgumentException("Categoria não encontrada");
         }
-
+        if (!(imageFile.isEmpty())) {
+            produto.setPhoto(imageFile.getBytes());
+        }
         Produto ultimoProduto  = produtoRepository.findTopByOrderByIdDesc();
         if (ultimoProduto == null) {
             produto.setCodigo(String.format("%010d", 1));
@@ -103,7 +105,7 @@ public class ProdutoService {
 
         produtoRepository.save(produto);
     }
-
+    @Transactional
     public Map<String, List<ProdutoDTO>> listarCardapioRestaurante(Long restauranteId) {
         List<Produto> produtos = produtoRepository.findByRestauranteId(restauranteId);
         return produtos.stream()
@@ -112,7 +114,7 @@ public class ProdutoService {
                         .codigo(p.getCodigo())
                         .titulo(p.getTitulo())
                         .descricao(p.getDescricao())
-                        .imagem(p.getImagem())
+                        .photo(p.getPhoto())
                         .valorUnitario(p.getValorUnitario())
                         .categoriaNome(p.getCategoriaProduto().getNome()) // Ou qualquer outro campo relevante
                         .build())
