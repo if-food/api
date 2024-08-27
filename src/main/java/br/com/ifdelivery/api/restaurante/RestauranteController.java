@@ -80,7 +80,7 @@ public class RestauranteController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/foto")
     public ResponseEntity<?> addPhoto(@RequestPart("data") String dataJson,
                                       @RequestPart(value = "imageFile", required = false) MultipartFile imageFile) {
         try {
