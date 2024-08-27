@@ -32,7 +32,7 @@ public class RestauranteService {
             throw new RestauranteException(RestauranteException.MSG_ERROR_SAVING + ": " + e.getMessage());
         }
     }
-
+    @Transactional
     public List<Restaurante> listarTodos() {
         try {
             return restauranteRepository.findAll();
@@ -74,7 +74,7 @@ public class RestauranteService {
             throw new RestauranteException(RestauranteException.MSG_ERROR_DELETING + ": " + e.getMessage());
         }
     }
-
+    @Transactional
     public Restaurante obterPorUsuarioId(Long usuarioId) {
 
             Restaurante restaurante =  restauranteRepository.findByUsuarioId(usuarioId);
@@ -84,7 +84,7 @@ public class RestauranteService {
             else return restaurante;
         }
 
-
+    @Transactional
     public Restaurante obterPorRestauranteId(Long id) {
 
             Optional<Restaurante> restaurante =  restauranteRepository.findById(id);
@@ -94,7 +94,7 @@ public class RestauranteService {
             else return restaurante.get();
 
         }
-
+    @Transactional
     public String adicionarFoto(Long id, byte[] foto, String TipoDeFoto) {
         try {
             Restaurante restaurante = restauranteRepository.findById(id)

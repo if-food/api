@@ -96,14 +96,16 @@ public class PedidoService {
     }
 
     //listar pedidos por cliente
+    @Transactional
     public List<Pedido> listarPorCliente(Long clienteId) {
         return pedidoRepository.findByClienteId(clienteId);
     }
     //listar pedidos por restaurante
+    @Transactional
     public List<Pedido> listarPorRestaurante(Long restauranteId) {
         return pedidoRepository.findByRestauranteId(restauranteId);
     }
-
+    @Transactional
     public Pedido atualizar(long id, Pedido pedidoAlterado) {
         Pedido pedido = pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
         if (pedidoAlterado.getStatusEntrega() != null) {
@@ -115,7 +117,7 @@ public class PedidoService {
 
         return pedidoRepository.save(pedido);
     }
-
+    @Transactional
     public void deletar(Long id) {
 
         Pedido pedido = pedidoRepository.findById(id).get();
@@ -124,11 +126,11 @@ public class PedidoService {
 
         pedidoRepository.save(pedido);
     }
-
+    @Transactional
     public Pedido buscarPorId(Long id) {
         return pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
     }
-
+    @Transactional
     public Iterable<Pedido> buscarTodos() {
         return pedidoRepository.findAll();
     }

@@ -47,4 +47,28 @@ public class PedidoController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Pedido> atualizar(@PathVariable Long id, @RequestBody Pedido pedidoAlterado) {
+        Pedido pedidoAtualizado = pedidoService.atualizar(id, pedidoAlterado);
+        return ResponseEntity.ok(pedidoAtualizado);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        pedidoService.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Pedido> buscarPorId(@PathVariable Long id) {
+        Pedido pedido = pedidoService.buscarPorId(id);
+        return ResponseEntity.ok(pedido);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Pedido>> buscarTodos() {
+        List<Pedido> pedidos = (List<Pedido>) pedidoService.buscarTodos();
+        return ResponseEntity.ok(pedidos);
+    }
+
 }
