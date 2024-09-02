@@ -79,20 +79,4 @@ public class RestauranteController {
         restauranteService.delete(id);
         return ResponseEntity.ok().build();
     }
-
-    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/foto")
-    public ResponseEntity<?> addPhoto(@RequestPart("data") String dataJson,
-                                      @RequestPart(value = "imageFile", required = false) MultipartFile imageFile) {
-        try {
-            ObjectMapper requestMapper = new ObjectMapper();
-            FotoRestauranteRequest request = requestMapper.readValue(dataJson, FotoRestauranteRequest.class);
-            Long restauranteId = request.getRestauranteId();
-            String tipoDeFoto = request.getTipoDeFoto();
-
-            restauranteService.adicionarFoto(restauranteId, imageFile.getBytes(), tipoDeFoto);
-            return ResponseEntity.ok().build();
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
 }

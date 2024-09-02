@@ -79,11 +79,10 @@ public class Restaurante extends EntidadeAuditavel {
     @Column(name = "categoria")
     private CategoriasEnum categoriasEnum;
 
-    @Lob
+    
     @Column(name = "photo_banner")
-    byte[] photoBanner;
+    String photoBanner;
 
-    @Lob
     @Column(name = "photo_logo")
-    byte[] photoLogo;
+    String photoLogo;
 }
