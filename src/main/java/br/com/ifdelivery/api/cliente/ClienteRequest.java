@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import br.com.ifdelivery.modelo.acesso.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -60,6 +61,8 @@ public class ClienteRequest {
 
     private String tipo;
 
+    private  String photo;
+
     /*private List<EnderecoCliente> enderecos;*/
 
 
@@ -96,6 +99,7 @@ public class ClienteRequest {
             .dataNascimento(dataNascimento)
             .telefone(telefone)
             .cpf(cpf)
+            .photo(photo)
             .build();
     }
 }

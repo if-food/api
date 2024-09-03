@@ -15,7 +15,7 @@ public interface CategoriaProdutoRepository extends JpaRepository<CategoriaProdu
 
 
 
-    @Query("SELECT c.id, c.nome, c.descricao, p.id, p.codigo, p.titulo, p.descricao, p.photo, p.valorUnitario " +
+    @Query("SELECT c.id, c.nome, c.descricao, p.id, p.codigo, p.titulo, p.descricao, p.imagem, p.valorUnitario " +
             "FROM CategoriaProduto c " +
             "LEFT JOIN c.produtos p " +
             "WHERE c.restaurante.id = :restauranteId " +
