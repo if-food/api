@@ -24,6 +24,8 @@ public class ProdutoRequest {
 
     private String descricao;
 
+    private  String imagem;
+
     @NotNull
     private Double valorUnitario;
 
@@ -32,6 +34,7 @@ public class ProdutoRequest {
                 .titulo(titulo)
                 .descricao(descricao)
                 .valorUnitario(valorUnitario)
+                .imagem(imagem)
                 .build();
     }
 }

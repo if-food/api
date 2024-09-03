@@ -27,7 +27,7 @@ public class Restaurante extends EntidadeAuditavel {
     @Column
     private String nomeFantasia;
 
-    @Column(name = "CNPJ")
+    @Column(name = "CNPJ", unique = true)
     private String cnpj;
 
     @Column(name = "CEP")

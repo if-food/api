@@ -31,24 +31,27 @@ public class ProdutoService {
     @Transactional
     public Produto save(Produto produto, Long restauranteId, Long categoriaId) {
 
+        Produto ultimoProduto  = produtoRepository.findTopByOrderByIdDesc();
+        if (ultimoProduto == null) {
+            produto.setCodigo(String.format("%010d", 1));
+        } else {
+            produto.setCodigo(String.format("%010d", ultimoProduto.getId() + 1));
+        }
 
         produto.setHabilitado(Boolean.TRUE);
         produto.setVersao(1L);
         produto.setDataCriacao(LocalDate.now());
         try {
             produto.setRestaurante(restauranteService.obterPorRestauranteId(restauranteId));
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new IllegalArgumentException("Erro ao criar produto, pois o restaurante não foi encontrado");
         }
         try {
             produto.setCategoriaProduto(categoriaProdutoService.obterPorID(categoriaId));
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new IllegalArgumentException("Erro ao criar produto, pois a categoria não foi encontrada");
         }
-
-        return produto;
+        return produtoRepository.save(produto);
     }
 
     public List<Produto> listarTodos() {

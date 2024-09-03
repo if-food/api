@@ -34,18 +34,13 @@ public class ProdutoController {
         this.restauranteService = restauranteService;
     }
 
-    @PostMapping()
-    public ResponseEntity<?> save(@Valid @RequestBody ProdutoRequest request,
-                                  @RequestParam Long restauranteId,
-                                  @RequestParam Long categoriaId) {
-        try {
-            Produto produto = produtoService.save(request.build(), restauranteId, categoriaId);
-            return ResponseEntity.status(HttpStatus.CREATED).body(produto);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro inexperado ao criar produto: " + e.getMessage());
-        }
+    @PostMapping("/")
+    @Operation(summary = "Criar um novo produto", description = "Endpoint responsavel por criar um novo produto")
+    public ResponseEntity<Produto> create(@RequestParam Long restauranteId,
+                                          @RequestParam Long categoriaId,
+                                          @RequestBody ProdutoRequest request) {
+        Produto novoProduto = produtoService.save(request.build(), restauranteId, categoriaId);
+        return ResponseEntity.ok(novoProduto);
     }
 
     @Operation(summary = "Listar todos os produtos", description = "Endpoint responsavel por listar todos os produtos")

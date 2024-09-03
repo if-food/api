@@ -3,6 +3,7 @@ package br.com.ifdelivery.modelo.cliente;
 import br.com.ifdelivery.modelo.acesso.Usuario;
 import br.com.ifdelivery.modelo.endereco.EnderecoCliente;
 import br.com.ifdelivery.util.entity.EntidadeAuditavel;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 import jakarta.persistence.*;
@@ -43,13 +44,14 @@ public class Cliente extends EntidadeAuditavel{
     @Column
     private Integer desconto;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column
     private LocalDate dataNascimento;
 
     @Column
     private String telefone;
 
-    @Column
+    @Column(unique = true)
     private String cpf;
 
     @Column
