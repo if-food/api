@@ -7,6 +7,7 @@ import br.com.ifdelivery.modelo.restaurante.Restaurante;
 import br.com.ifdelivery.modelo.restaurante.RestauranteService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.Part;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,42 +34,19 @@ public class ProdutoController {
         this.restauranteService = restauranteService;
     }
 
-//    @Operation(summary = "Cadastrar um novo produto", description = "Endpoint responsável por cadastrar um novo produto")
-//    @PostMapping(consumes = "multipart/form-data")
-//    public ResponseEntity<?> save(@RequestPart("data") ProdutoRequest request,
-//                                  @RequestPart("imageFile") MultipartFile imageFile) {
-//        try {
-//
-//            Long restauranteId = request.getRestauranteId();
-//
-//            Long categoriaId = request.getCategoriaId();
-//
-//            Produto produtoNovo = produtoService.save(request.build(), restauranteId, categoriaId, imageFile);
-//            return ResponseEntity.ok(produtoNovo);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//        }
-//    }
-
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> save(@RequestPart("data") String dataJson,
-                        @RequestPart(value = "imageFile",required = false) MultipartFile imageFile) {
+    @PostMapping()
+    public ResponseEntity<?> save(@Valid @RequestBody ProdutoRequest request,
+                                  @RequestParam Long restauranteId,
+                                  @RequestParam Long categoriaId) {
         try {
-
-            ObjectMapper requestMapper = new ObjectMapper();
-            ProdutoRequest request = requestMapper.readValue(dataJson, ProdutoRequest.class);
-            Long restauranteId = request.getRestauranteId();
-            Long categoriaId = request.getCategoriaId();
-
-
-                Produto produtoNovo = produtoService.save(request.build(), restauranteId, categoriaId, imageFile);
-                return ResponseEntity.ok(produtoNovo);
-
-        } catch (IOException e) {
+            Produto produto = produtoService.save(request.build(), restauranteId, categoriaId);
+            return ResponseEntity.status(HttpStatus.CREATED).body(produto);
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro inexperado ao criar produto: " + e.getMessage());
         }
     }
-
 
     @Operation(summary = "Listar todos os produtos", description = "Endpoint responsavel por listar todos os produtos")
     @GetMapping("/cardapio/{restauranteId}")

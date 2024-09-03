@@ -37,10 +37,11 @@ public class RestauranteRequest {
     private boolean aceitaDinheiro;
     private boolean aceitaValeRefeicao;
     private boolean aceitaValeAlimentacao;
+    private String photoBanner;
+    private String photoLogo;
 
   //  @Enumerated(EnumType.STRING)
  //   private CategoriasEnum categoria;
-
 
     private String categoria;
 
@@ -83,6 +84,8 @@ public class RestauranteRequest {
                 .aceitaDinheiro(aceitaDinheiro)
                 .aceitaValeRefeicao(aceitaValeRefeicao)
                 .aceitaValeAlimentacao(aceitaValeAlimentacao)
+                .photoLogo(photoLogo)
+                .photoBanner(photoBanner)
                 .categoriasEnum(CategoriasEnum.fromDescricao(categoria))
                 .build();
     }

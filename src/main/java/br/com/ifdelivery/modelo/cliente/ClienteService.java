@@ -83,6 +83,7 @@ public class ClienteService {
         cliente.setDataNascimento(clienteAlterado.getDataNascimento());
         cliente.setTelefone(clienteAlterado.getTelefone());
         cliente.setCpf(clienteAlterado.getCpf());
+        cliente.setPhoto(clienteAlterado.getPhoto());
 
 
 
@@ -160,17 +161,5 @@ public class ClienteService {
            cliente.setVersao(cliente.getVersao() + 1);
     repository.save(cliente);
 }
-
-    @Transactional
-    public void adicionarImagem(Long clienteId, MultipartFile imageFile) throws IOException {
-        Optional<Cliente> clienteOpt = repository.findById(clienteId);
-        if (clienteOpt.isPresent()) {
-            Cliente cliente = clienteOpt.get();
-            cliente.setPhoto(imageFile.getBytes());
-            repository.save(cliente);
-        } else {
-            throw new RuntimeException("Cliente not found");
-        }
-    }
 
 }

@@ -79,29 +79,5 @@ public class ClienteController {
        clienteService.removerEnderecoCliente(enderecoId);
        return ResponseEntity.noContent().build();
    }
-
-    @PutMapping("/imagem/")
-    public ResponseEntity<?> obterImagem(@RequestParam Long clienteId,
-                                              @RequestPart MultipartFile imageFile) {
-        try {
-            clienteService.adicionarImagem(clienteId, imageFile);
-            return ResponseEntity.ok("Image updated successfully");
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update image");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-    }
-
-    @GetMapping("/{clienteId}/imagem")
-    public ResponseEntity<byte[]> obterImagem(@PathVariable Long clienteId) {
-        Cliente cliente = clienteService.obterPorID(clienteId);
-        if (cliente == null || cliente.getPhoto() == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(cliente.getPhoto());
-    }
 }
 

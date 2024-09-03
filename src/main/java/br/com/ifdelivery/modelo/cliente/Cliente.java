@@ -55,10 +55,7 @@ public class Cliente extends EntidadeAuditavel{
     @Column
     private String codigoAuth;
 
-
-
-    @Lob
     @Column
-    byte[] photo;
+    String photo;
 
 }

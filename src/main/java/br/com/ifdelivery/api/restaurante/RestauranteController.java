@@ -28,13 +28,14 @@ public class RestauranteController {
 
     @Operation(summary = "Cadastrar um restaurante", description = "Endpoint responsável por cadastrar um restaurante")
     @PostMapping
-    public ResponseEntity<Restaurante> save(@RequestBody @Valid RestauranteRequest request) {
+    public ResponseEntity<?> save(@RequestBody @Valid RestauranteRequest request) {
 
-        System.out.println(request.toString());
-
-        Restaurante restaurante = restauranteService.save(request.build());
-
-        return new ResponseEntity<Restaurante>(restaurante, HttpStatus.CREATED);
+        try {
+            Restaurante restaurante = restauranteService.save(request.build());
+            return new ResponseEntity<>(restaurante, HttpStatus.CREATED);
+        } catch (RestauranteException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @Operation(summary = "Listar todos os restaurantes", description = "Endpoint responsável por listar todos os restaurantes")
