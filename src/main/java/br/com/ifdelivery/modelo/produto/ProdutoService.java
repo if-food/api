@@ -2,18 +2,14 @@ package br.com.ifdelivery.modelo.produto;
 
 import br.com.ifdelivery.api.produto.dto.ProdutoDTO;
 import br.com.ifdelivery.modelo.categoria_produto.CategoriaProdutoService;
-import br.com.ifdelivery.modelo.cliente.Cliente;
 import br.com.ifdelivery.modelo.restaurante.RestauranteService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

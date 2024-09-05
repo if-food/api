@@ -2,7 +2,6 @@ package br.com.ifdelivery.modelo.categoria_produto;
 
 
 
-import br.com.ifdelivery.api.categoria_produto.dto.CategoriaProdutoDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

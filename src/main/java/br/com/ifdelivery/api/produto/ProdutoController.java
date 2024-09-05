@@ -3,21 +3,11 @@ package br.com.ifdelivery.api.produto;
 import br.com.ifdelivery.api.produto.dto.ProdutoDTO;
 import br.com.ifdelivery.modelo.produto.Produto;
 import br.com.ifdelivery.modelo.produto.ProdutoService;
-import br.com.ifdelivery.modelo.restaurante.Restaurante;
 import br.com.ifdelivery.modelo.restaurante.RestauranteService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.Part;
-import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 

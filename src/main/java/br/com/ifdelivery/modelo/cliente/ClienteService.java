@@ -1,6 +1,5 @@
 package br.com.ifdelivery.modelo.cliente;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ClienteService {
@@ -47,6 +45,7 @@ public class ClienteService {
         }
 
         usuarioService.save(cliente.getUsuario());
+
         cliente.setHabilitado(Boolean.TRUE);
         cliente.setVersao(1L);
         cliente.setDataCriacao(LocalDate.now());
@@ -83,7 +82,6 @@ public class ClienteService {
         cliente.setDataNascimento(clienteAlterado.getDataNascimento());
         cliente.setTelefone(clienteAlterado.getTelefone());
         cliente.setCpf(clienteAlterado.getCpf());
-        cliente.setPhoto(clienteAlterado.getPhoto());
 
 
 
@@ -162,4 +160,25 @@ public class ClienteService {
     repository.save(cliente);
 }
 
+    public Cliente obterPorUsuarioId(Long usuarioId) throws Exception{
+
+            Cliente cliente =  repository.findByUsuarioId(usuarioId);
+            if (cliente == null) {
+                throw new Exception("Cliente não encontrado, com usuário id: " + usuarioId);
+            }
+            else return cliente;
+        }
+
+
+    public Cliente obterPorClienteId(Long id) throws Exception {
+
+            Optional<Cliente> cliente =  repository.findById(id);
+            if(cliente.isEmpty()) {
+                throw new Exception("Usuario não encontrado, com usuário id: " + id);
+            }
+            else return cliente.get();
+
+        }
+
+ 
 }

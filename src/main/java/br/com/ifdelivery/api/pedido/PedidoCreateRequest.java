@@ -1,9 +1,7 @@
 package br.com.ifdelivery.api.pedido;
 
-import br.com.ifdelivery.modelo.cliente.Cliente;
 import br.com.ifdelivery.modelo.pedido.Pedido;
 import br.com.ifdelivery.modelo.pedido.enums.MetodosPgtoEnum;
-import br.com.ifdelivery.modelo.restaurante.Restaurante;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;

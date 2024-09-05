@@ -1,16 +1,12 @@
 package br.com.ifdelivery.api.cliente;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 
 import br.com.ifdelivery.modelo.acesso.Usuario;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.ifdelivery.modelo.cliente.Cliente;
-import br.com.ifdelivery.modelo.endereco.EnderecoCliente;
 import br.com.ifdelivery.util.entity.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

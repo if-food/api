@@ -4,8 +4,6 @@ import br.com.ifdelivery.modelo.acesso.Usuario;
 import br.com.ifdelivery.modelo.endereco.EnderecoCliente;
 import br.com.ifdelivery.util.entity.EntidadeAuditavel;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Type;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
