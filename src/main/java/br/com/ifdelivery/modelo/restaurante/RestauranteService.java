@@ -52,6 +52,14 @@ public class RestauranteService {
             restaurante.setCnpj(restauranteAlterado.getCnpj());
             restaurante.setPhotoBanner(restaurante.getPhotoBanner());
             restaurante.setPhotoLogo(restaurante.getPhotoLogo());
+            restaurante.setCidade(restauranteAlterado.getCidade());
+            restaurante.setCategoriasEnum(restauranteAlterado.getCategoriasEnum());
+            restaurante.setAceitaCartaoCredito(restauranteAlterado.isAceitaCartaoCredito());
+            restaurante.setAceitaCartaoDebito(restauranteAlterado.isAceitaCartaoDebito());
+            restaurante.setAceitaDinheiro(restauranteAlterado.isAceitaDinheiro());
+            restaurante.setAceitaPix(restauranteAlterado.isAceitaPix());
+            restaurante.setAceitaValeAlimentacao(restauranteAlterado.isAceitaValeAlimentacao());
+            restaurante.setAceitaValeRefeicao(restauranteAlterado.isAceitaValeRefeicao());
             restaurante.setCep(restauranteAlterado.getCep());
             restaurante.setEstado(restauranteAlterado.getEstado());
             restaurante.setBairro(restauranteAlterado.getBairro());
