@@ -101,7 +101,9 @@ public class PedidoService {
     }
     @Transactional
     public Pedido atualizar(long id, Pedido pedidoAlterado) {
-        Pedido pedido = pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
+        Pedido pedido = pedidoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado"));
+
         if (pedidoAlterado.getStatusEntrega() != null) {
             pedido.setStatusEntrega(pedidoAlterado.getStatusEntrega());
         }

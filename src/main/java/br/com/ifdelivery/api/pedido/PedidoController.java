@@ -45,8 +45,8 @@ public class PedidoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pedido> atualizar(@PathVariable Long id, @RequestBody Pedido pedidoAlterado) {
-        Pedido pedidoAtualizado = pedidoService.atualizar(id, pedidoAlterado);
+    public ResponseEntity<Pedido> atualizar(@PathVariable Long id, @RequestBody PedidoUpdateRequest pedidoAlterado) {
+        Pedido pedidoAtualizado = pedidoService.atualizar(id, pedidoAlterado.build());
         return ResponseEntity.ok(pedidoAtualizado);
     }
 
