@@ -52,38 +52,38 @@ public class Pedido extends EntidadeAuditavel {
     @Column(name = "status_pedido")
     private StatusEntregaEnum statusEntrega;
 
-    @JsonIgnore
+
     @Column(name = "CEP")
     private String cep;
 
-    @JsonIgnore
+
     @Column
     private String estado;
 
-    @JsonIgnore
+
     @Column
     private String cidade;
 
-    @JsonIgnore
+
     @Column
     private String bairro;
 
-    @JsonIgnore
+
     @Column
     private String rua;
 
-    @JsonIgnore
+
     @Column
     private String numero;
 
-    @JsonIgnore
+
     @Column
     private String complemento;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemPedido> itens;
 
-    @JsonIgnore
+
     @Column
     private String observacao;
 

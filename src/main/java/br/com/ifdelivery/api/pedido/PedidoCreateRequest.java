@@ -2,6 +2,7 @@ package br.com.ifdelivery.api.pedido;
 
 import br.com.ifdelivery.modelo.pedido.Pedido;
 import br.com.ifdelivery.modelo.pedido.enums.MetodosPgtoEnum;
+import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,13 @@ public class PedidoCreateRequest{
     private MetodosPgtoEnum formaPgto;
     private String observacao;
     private List<ItemPedidoRequest> itens;
+    private String cep;
+    private String estado;
+    private String cidade;
+    private String bairro;
+    private String rua;
+    private String numero;
+    private String complemento;
 
     public Pedido build(){
         return Pedido.builder()
