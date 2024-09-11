@@ -16,6 +16,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +53,7 @@ public class PedidoService {
         pedido.setDataCriacao(LocalDate.now());
         pedido.setStatusEntrega(StatusEntregaEnum.PENDENTE);
         pedido.setStatusPgto(StatusPgtoEnum.PENDENTE);
+        pedido.setDataDoPedido(LocalDateTime.now());
 
         double valorTotal = 0;
 
