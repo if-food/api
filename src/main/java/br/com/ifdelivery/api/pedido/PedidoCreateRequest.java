@@ -34,6 +34,14 @@ public class PedidoCreateRequest{
     public Pedido build(){
         return Pedido.builder()
                 .metodoPagamento(formaPgto)
+                .cep(cep)
+                .estado(estado)
+                .cidade(cidade)
+                .bairro(bairro)
+                .rua(rua)
+                .numero(numero)
+                .complemento(complemento)
+                .observacao(observacao)
                 .build();
     }
 }
