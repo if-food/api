@@ -50,8 +50,8 @@ public class RestauranteService {
             restaurante.setNomeFantasia(restauranteAlterado.getNomeFantasia());
             restaurante.setRazaoSocial(restauranteAlterado.getRazaoSocial());
             restaurante.setCnpj(restauranteAlterado.getCnpj());
-            restaurante.setPhotoBanner(restaurante.getPhotoBanner());
-            restaurante.setPhotoLogo(restaurante.getPhotoLogo());
+            restaurante.setPhotoBanner(restauranteAlterado.getPhotoBanner());
+            restaurante.setPhotoLogo(restauranteAlterado.getPhotoLogo());
             restaurante.setCidade(restauranteAlterado.getCidade());
             restaurante.setCategoriasEnum(restauranteAlterado.getCategoriasEnum());
             restaurante.setAceitaCartaoCredito(restauranteAlterado.isAceitaCartaoCredito());
